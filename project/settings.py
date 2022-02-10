@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'django_rest_passwordreset',
+    'whitenoise.runserver_nostatic',
     
     'corsheaders',
 ]
@@ -56,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -91,14 +94,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 from dj_database_url import parse as dburl
+
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 
 DATABASES = {
-        'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
+    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
 }
 
 # Original
@@ -109,6 +114,7 @@ DATABASES = {
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -149,6 +155,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         # 'rest_framework.authentication.BasicAuthentication',
@@ -156,10 +164,9 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
     ]
 }
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
