@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = config('DEBUG')
-ALLOWED_HOSTS = ['127.0.0.1','localhost','mri-detection-cancer-project.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','mri-detection-graduateproject.herokuapp.com']
 
 # ALLOWED_HOSTS = []
 
